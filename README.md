@@ -1,6 +1,7 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 > :warning: **WIP** :warning:
+> Fledit.io client for node and the browser.
 
 
 ## Install
