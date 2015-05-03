@@ -9,8 +9,12 @@ function File(id) {
   emitter = new events.EventEmitter();
 
   request.get(url).end(function(err, res) {
-    console.log(res.body);
-    emitter.emit("complete", res.body);
+    if(res.ok) {
+      emitter.emit("complete", res.body);
+    } else {
+      emitter.emit("error", err);
+    }
+
   });
 
   return emitter;
