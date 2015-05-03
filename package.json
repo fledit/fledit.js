@@ -34,6 +34,6 @@
   "scripts": {
     "test": "grunt",
     "watch": "grunt watch",
-    "browser": "browserify index.js --exclude jquery > browser.js"
+    "browser": "browserify index.js > browser.js"
   }
 }
