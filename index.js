@@ -1,13 +1,15 @@
 'use strict';
 
-var    $ = require('jquery'),
-  events = require('events');
+var request = require('request'),
+     events = require('events');
 
 function File(id) {
-  var emitter = new events.EventEmitter();
 
-  $.getJSON("http://localhost:9000/api/files/" + id, function(result) {
-    emitter.emit("complete", result);
+  var url = "http://localhost:9000/api/files/" + id,
+  emitter = new events.EventEmitter();
+
+  request({ url: url, json: true }, function(err, res, body) {
+    emitter.emit("complete", body);
   });
 
   return emitter;
