@@ -27,7 +27,6 @@ File.create = function(content) {
   return file.create(content);
 };
 
-
 // Create a file
 File.prototype.create = function(content) {
   // Current instance of File
@@ -43,6 +42,13 @@ File.prototype.create = function(content) {
   });
   // Return the instance
   return file;
+};
+
+
+// Static method to load aa file using its id
+File.load = function(id) {
+  // Create a new file
+  return new File(id);
 };
 
 // Load a file using its id

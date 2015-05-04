@@ -16,6 +16,16 @@ describe('fledit node module', function () {
 
   });
 
+  it('must have load one file with static method', function (done) {
+
+    Fledit.load("54f9f00f509e85d4040ba535").on("complete", function(file) {
+      assert(file._id === "54f9f00f509e85d4040ba535");
+      done();
+    });
+
+  });
+
+
   it('must have not found a file', function (done) {
 
     var fledit = new Fledit("not_a_valid_id");
