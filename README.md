@@ -32,7 +32,7 @@ MIT © [Fledit](http://fledit.io)
 
 [npm-image]: https://badge.fury.io/js/fledit.svg
 [npm-url]: https://npmjs.org/package/fledit
-[travis-image]: https://travis-ci.org/fledit/fledit.svg?branch=master
-[travis-url]: https://travis-ci.org/fledit/fledit
-[daviddm-image]: https://david-dm.org/fledit/fledit.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/fledit/fledit
+[travis-image]: https://travis-ci.org/fledit/fledit.js.svg?branch=master
+[travis-url]: https://travis-ci.org/fledit/fledit.js
+[daviddm-image]: https://david-dm.org/fledit/fledit.js.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/fledit/fledit.js
