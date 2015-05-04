@@ -6,23 +6,44 @@ var request = require('superagent'),
 
 function File(id) {
   // Build the URL to the file
-  var url = "http://localhost:9000/api/files/" + id,
+  File.BASE = "http://localhost:9000/api/files";
   // Create an event emitter
-  emitter = new events.EventEmitter(),
+  var emitter = new events.EventEmitter(),
   // Current instance of File
   file = this;
+  // The current file must be an instance of an EventEmiiter
+  extend(file, emitter);
+  // Do not load a file without id
+  if(id) {
+    // Gets the file
+    request.get(File.BASE + "/" + id).end(function(err, res) {
+      if(res.ok) {
+        extend(file, res.body);
+        emitter.emit("complete", file);
+      } else {
+        emitter.emit("error", err);
+      }
+    });
+  }
 
+  return file;
+}
 
-  request.get(url).end(function(err, res) {
-    if(res.ok) {
-      extend(file, res.body);
-      emitter.emit("complete", file);
-    } else {
-      emitter.emit("error", err);
-    }
+// Static method to create a new file and returns its instance
+File.create = function(content) {
+  // Create a new empty file
+  var file = new File();
+  // Gets the file
+  request.post(File.BASE, {content: content}).end(function(err, res) {
+      if(res.ok) {
+        extend(file, res.body);
+        file.emit("complete", file);
+      } else {
+        file.emit("error", err);
+      }
   });
 
-  return emitter;
-}
+  return file;
+};
 
 module.exports = File;
