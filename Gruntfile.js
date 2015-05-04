@@ -22,10 +22,6 @@ module.exports = function (grunt) {
       }
     },
     mochacli: {
-      options: {
-        reporter: 'nyan',
-        bail: true
-      },
       all: ['test/*.js']
     },
     watch: {
