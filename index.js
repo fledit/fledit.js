@@ -45,7 +45,7 @@ File.prototype.create = function(content) {
 };
 
 
-// Static method to load aa file using its id
+// Static method to load a file using its id
 File.load = function(id) {
   // Create a new file
   return new File(id);
