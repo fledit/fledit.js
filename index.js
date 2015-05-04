@@ -6,7 +6,7 @@ var request = require('superagent'),
 
 function File(id) {
   // Build the URL to the file
-  File.BASE = "http://localhost:9000/api/files";
+  File.BASE = "http://www.fledit.io/api/files";
   // Create an event emitter
   var emitter = new events.EventEmitter(),
   // Current instance of File
