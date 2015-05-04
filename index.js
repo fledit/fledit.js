@@ -1,6 +1,7 @@
 'use strict';
 
 var request = require('superagent'),
+     extend = require('node.extend'),
      events = require('events');
 
 function File(id) {
@@ -8,13 +9,14 @@ function File(id) {
   var url = "http://localhost:9000/api/files/" + id,
   // Create an event emitter
   emitter = new events.EventEmitter(),
-  // Create an empty object to contain the futur file
-  file = null;
+  // Current instance of File
+  file = this;
 
 
   request.get(url).end(function(err, res) {
     if(res.ok) {
-      emitter.emit("complete", res.body);
+      extend(file, res.body);
+      emitter.emit("complete", file);
     } else {
       emitter.emit("error", err);
     }
