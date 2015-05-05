@@ -20,6 +20,37 @@ describe('fledit node module', function () {
 
   });
 
+  it('must gets the permalink to a file', function (done) {
+    Fledit.load(EXISTING_ID).on("complete", function(file) {
+      assert(file.link() === "http://" + Fledit.HOST + "/#!/file/" + EXISTING_ID);
+      done();
+    });
+  });
+
+  it('must gets the raw link to a file', function (done) {
+    Fledit.load(EXISTING_ID).on("complete", function(file) {
+      assert(file.raw() === "http://" + Fledit.HOST + "/api/files/" + EXISTING_ID);
+      done();
+    });
+  });
+
+  it('must failled to get the admin link to a file', function (done) {
+    Fledit.load(EXISTING_ID).on("complete", function(file) {
+      assert(file.admin() === null);
+      done();
+    });
+  });
+
+  it('must gets the admin link to a file', function (done) {
+    Fledit.create(null).once("complete", function(file) {
+      var link = "http://" + Fledit.HOST + "/#!/file/" + file._id;
+      assert(file.admin() === link + "?secret=" + file.secret);
+      done();
+    });
+  });
+
+
+
   it('must have load one file with static method', function (done) {
 
     Fledit.load(EXISTING_ID).on("complete", function(file) {

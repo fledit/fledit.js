@@ -102,7 +102,27 @@ File.prototype.del = function() {
   });
   // Return the instance
   return file;
+};
 
+
+// Link to a file
+File.prototype.link = function() {
+  return "http://" + File.HOST + "/#!/file/" + this._id;
+};
+
+// Raw link to a file
+File.prototype.raw = function() {
+  return File.BASE + "/" + this._id;
+};
+
+// Admin link to a file
+File.prototype.admin = function() {
+  // Only admin link for file with a secret
+  if(this.secret) {
+    return this.link() + "?secret=" + this.secret;
+  } else {
+    return null;
+  }
 };
 
 module.exports = File;
