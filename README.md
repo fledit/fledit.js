@@ -6,22 +6,45 @@
 
 ## Install
 
+### For Node.js or IO.js
+
 ```sh
 $ npm install --save fledit
 ```
 
+### For the browser
+
+```sh
+$ bower install --save fledit
+```
 
 ## Usage
 
 ```js
-var fledit = require('fledit');
+// Only if you're using Fledit in server-side
+var Fledit = require('fledit');
 
-fledit('Rainbow');
-```
+// Get an existing file from Fledit.io
+var file = new File("54f9f00f509e85d4040ba535");
+// Wait for the file to be loaded
+file.once("complete", function(file) {
+  // The complete function will receive a Fledit instance.
+  console.log(file);
+});
 
-```sh
-# creates a browser.js
-$ npm run browser
+// Create a new file on Fledit.io
+// and wait for the file to be loaded
+File.create({ foo: 'Bar' }).once("complete", function(file) {
+  // The complete function will receive a new Fledit instance.
+  console.log('Should prompt 'Bar' to the console.', File.content.foo);
+  // You can change the file like any Javascript object:
+  file.content.foo = 'Like crazy';
+  // And set a name as well
+  file.name = 'This is a pretty cute name';
+  // Then make the data persist
+  file.save();
+});
+
 ```
 
 
