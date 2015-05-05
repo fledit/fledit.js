@@ -71,4 +71,22 @@ File.prototype.load = function(id) {
   return file;
 };
 
+// Save a file
+File.prototype.save = function() {
+  // Current instance of File
+  var file = this;
+  // Gets the file
+  request.put(File.BASE + "/" + file._id, file).end(function(err, res) {
+    if(res.ok) {
+      extend(file, res.body);
+      file.emit("complete", file);
+    } else {
+      file.emit("error", err);
+    }
+  });
+  // Return the instance
+  return file;
+
+};
+
 module.exports = File;
