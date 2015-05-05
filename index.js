@@ -79,7 +79,23 @@ File.prototype.save = function() {
   request.put(File.BASE + "/" + file._id, file).end(function(err, res) {
     if(res.ok) {
       extend(file, res.body);
-      file.emit("complete", file);
+      file.emit("updated", file);
+    } else {
+      file.emit("error", err);
+    }
+  });
+  // Return the instance
+  return file;
+};
+
+// Delete a file
+File.prototype.del = function() {
+  // Current instance of File
+  var file = this;
+  // Gets the file
+  request.del(File.BASE + "/" + file._id + "?secret=" + file.secret).end(function(err, res) {
+    if(res.ok) {
+      file.emit("deleted", file);
     } else {
       file.emit("error", err);
     }

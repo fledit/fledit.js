@@ -53,7 +53,6 @@ describe('fledit node module', function () {
 
   });
 
-
   it('must create then update a file', function (done) {
 
     var fledit = Fledit.create({ foo: 'Bar'});
@@ -64,9 +63,22 @@ describe('fledit node module', function () {
       file.content = { bar: 'Foo' };
       file.name = 'This is a file created by a robot during a test';
       // And save it!
-      file.save().once("complete", function(file) {
+      file.save().once("updated", function(file) {
         // The content must not be the same
         assert(file.content.bar === 'Foo');
+        done();
+      });
+    });
+
+  });
+
+  it('must create a file then delete it', function (done) {
+
+    Fledit.create("Please delete me.").once("complete", function(file) {
+      // The created file must have an id
+      assert(!!file._id);
+      // Delele the file
+      file.del().once("deleted", function() {
         done();
       });
     });
