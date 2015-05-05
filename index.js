@@ -5,8 +5,8 @@ var request = require('superagent'),
      events = require('events');
 
 function File(id) {
-  // Build the URL to the file
-  File.BASE = "http://www.fledit.io/api/files";
+  // Build the URL to the API at runtime
+  File.BASE = "http://" + File.HOST + "/api/files";
   // Create an event emitter
   var emitter = new events.EventEmitter(),
   // Current instance of File
@@ -18,6 +18,9 @@ function File(id) {
   // Return the new instance
   return file;
 }
+
+// Fledit host (can be overided)
+File.HOST = 'www.fledit.io';
 
 // Static method to create a new file and returns its instance
 File.create = function(content) {
