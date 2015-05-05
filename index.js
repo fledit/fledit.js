@@ -76,7 +76,7 @@ File.prototype.save = function() {
   // Current instance of File
   var file = this;
   // Gets the file
-  request.put(File.BASE + "/" + file._id, file).end(function(err, res) {
+  request.put( file.raw(), file).end(function(err, res) {
     if(res.ok) {
       extend(file, res.body);
       file.emit("updated", file);
@@ -93,7 +93,7 @@ File.prototype.del = function() {
   // Current instance of File
   var file = this;
   // Gets the file
-  request.del(File.BASE + "/" + file._id + "?secret=" + file.secret).end(function(err, res) {
+  request.del( file.raw(true) ).end(function(err, res) {
     if(res.ok) {
       file.emit("deleted", file);
     } else {
@@ -111,8 +111,8 @@ File.prototype.link = function() {
 };
 
 // Raw link to a file
-File.prototype.raw = function() {
-  return File.BASE + "/" + this._id;
+File.prototype.raw = function(secret) {
+  return File.BASE + "/" + this._id + (secret ? '?secret=' + this.secret : '');
 };
 
 // Admin link to a file

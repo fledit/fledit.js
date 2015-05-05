@@ -50,7 +50,6 @@ describe('fledit node module', function () {
   });
 
 
-
   it('must have load one file with static method', function (done) {
 
     Fledit.load(EXISTING_ID).on("complete", function(file) {
