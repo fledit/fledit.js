@@ -30,7 +30,7 @@ describe('fledit node module', function () {
   });
 
 
-  it('must have not found a file', function (done) {
+  it('must not validate the file id', function (done) {
 
     var fledit = new Fledit("not_a_valid_id");
 
@@ -79,7 +79,11 @@ describe('fledit node module', function () {
       assert(!!file._id);
       // Delele the file
       file.del().once("deleted", function() {
-        done();
+        // The file must not be found
+        Fledit.load(file._id).once("error", function(error) {
+          assert(error.status === 404);
+          done();
+        });
       });
     });
 
