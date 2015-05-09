@@ -36,7 +36,7 @@ File.prototype.create = function(content) {
   var file = this;
   // Gets the file
   request.post(File.BASE, {content: content}).end(function(err, res) {
-      if(res.ok) {
+      if(res && res.ok) {
         extend(file, res.body);
         file.emit("complete", file);
       } else {
@@ -60,7 +60,7 @@ File.prototype.load = function(id) {
   var file = this;
   // Gets the file
   request.get(File.BASE + "/" + id).end(function(err, res) {
-    if(res.ok) {
+    if(res && res.ok) {
       extend(file, res.body);
       file.emit("complete", file);
     } else {
@@ -94,7 +94,7 @@ File.prototype.del = function() {
   var file = this;
   // Gets the file
   request.del( file.raw(true) ).end(function(err, res) {
-    if(res.ok) {
+    if(res && res.ok) {
       file.emit("deleted", file);
     } else {
       file.emit("error", err);
