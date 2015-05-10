@@ -1,0 +1,29 @@
+{
+  "name": "fledit",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/fledit/fledit.js",
+  "authors": [
+    "pirhoo <hello@pirhoo.com>"
+  ],
+  "description": "Fledit.io client for node and the browser. This library allows you to save and retreive data instantanetly in Fledit.",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "keywords": [
+    "fledit",
+    "fledit.io",
+    "persistence",
+    "file",
+    "JSON"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
