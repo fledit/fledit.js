@@ -37,8 +37,15 @@ module.exports = function (grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'mochacli']
       }
+    },
+    browserify: {
+      'fledit.js': 'index.js'
+    },
+    uglify: {
+      'fledit.min.js': 'fledit.js'
     }
   });
 
   grunt.registerTask('default', ['jshint', 'mochacli']);
+  grunt.registerTask('bower', ['browserify', 'uglify']);
 };
