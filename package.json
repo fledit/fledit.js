@@ -34,6 +34,6 @@
   "scripts": {
     "test": "grunt",
     "watch": "grunt watch",
-    "browser": "browserify index.js > browser.js"
+    "browser": "browserify index.js > fledit.js"
   }
 }

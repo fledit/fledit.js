@@ -1,6 +1,6 @@
 {
   "name": "fledit",
-  "main": "index.js",
+  "main": "fledit.js",
   "version": "0.0.0",
   "homepage": "https://github.com/fledit/fledit.js",
   "authors": [
