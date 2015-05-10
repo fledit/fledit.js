@@ -39,7 +39,7 @@ file.once("complete", function(file) {
 // and wait for the file to be loaded
 Fledit.create({ foo: 'Bar' }).once("complete", function(file) {
   // The complete function will receive a new Fledit instance.
-  console.log('Should prompt 'Bar' to the console.', file.content.foo);
+  console.log('Should prompt "Bar" to the console.', file.content.foo);
   // You can change the file like any Javascript object:
   file.content.foo = 'Like crazy';
   // And set a name as well
