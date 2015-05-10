@@ -2,7 +2,7 @@
   "name": "fledit",
   "version": "0.0.1",
   "description": "Fledit.io client for node and the browser.",
-  "homepage": "http://fledit.io",
+  "homepage": "https://github.com/fledit/fledit.js",
   "author": {
     "name": "Fledit",
     "email": "hello@pirhoo.com",
