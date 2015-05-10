@@ -3,9 +3,9 @@
 var assert = require('assert');
 var Fledit = require('../');
 
-var EXISTING_ID = "54f9f00f509e85d4040ba535";
+var EXISTING_ID = "5538c9b58814581100287a17";
 // If tests are with a local instance of Fledit.io
-Fledit.HOST = "localhost:9000";
+Fledit.HOST = "www.fledit.io";
 
 describe('fledit node module', function () {
 
