@@ -8,6 +8,8 @@ var EXISTING_ID = "5538c9b58814581100287a17";
 Fledit.HOST = "www.fledit.io";
 
 describe('fledit node module', function () {
+  // Fledit might be long to wake up on Heroku
+  this.timeout(20000);
 
   it('must have load one file', function (done) {
 
