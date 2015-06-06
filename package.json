@@ -1,6 +1,6 @@
 {
   "name": "fledit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fledit.io client for node and the browser.",
   "homepage": "https://github.com/fledit/fledit.js",
   "author": {
