@@ -39,7 +39,12 @@ module.exports = function (grunt) {
       }
     },
     browserify: {
-      'fledit.js': 'index.js'
+      'fledit.js': 'index.js',
+      options: {
+        browserifyOptions: {
+          standalone: 'Fledit'
+        }
+      }
     },
     uglify: {
       'fledit.min.js': 'fledit.js'
