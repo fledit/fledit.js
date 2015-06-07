@@ -78,7 +78,7 @@ File.prototype.save = function() {
   var file = this;
   // Gets the file
   request.put( file.raw(), file).end(function(err, res) {
-    if(res.ok) {
+    if(res && res.ok) {
       extend(file, res.body);
       file.emit("updated", file);
     } else {
