@@ -1,7 +1,7 @@
 {
   "name": "fledit",
   "main": "fledit.js",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "homepage": "https://github.com/fledit/fledit.js",
   "authors": [
     "pirhoo <hello@pirhoo.com>"
