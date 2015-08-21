@@ -39,7 +39,7 @@ module.exports = function (grunt) {
       }
     },
     browserify: {
-      'fledit.js': 'index.js',
+      'dist/fledit.js': 'index.js',
       options: {
         browserifyOptions: {
           standalone: 'Fledit'
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      'fledit.min.js': 'fledit.js'
+      'dist/fledit.min.js': 'dist/fledit.js'
     }
   });
 
