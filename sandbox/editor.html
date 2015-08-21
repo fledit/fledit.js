@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Text Editor - Sandbox - Fledit.js</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+      <form class="row" id="main-form">
+        <div class="col-md-8 col-md-offset-2">
+          <br />
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <textarea id="content" class="form-control" rows="6"></textarea>
+              <br />
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            <div class="panel-footer" id="link">
+              This link allows you to view and edit your file on Fledit.io:<br />
+              <!-- Will contain an admin link to the file -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="../fledit.js"></script>
+    <script>
+      // To work with a local instance of fledit
+      Fledit.HOST = 'localhost:9000';
+
+      // Create a new file instance
+      var file = Fledit.create().once('complete', function() {
+        // Hold a link to the file
+        var link = file.admin();
+        // Update the link
+        $("#link").show().append( $('<a/>').attr('href', link).html(link) );
+      })
+
+      // Save the file when the user click on submit
+      $('#main-form').on('submit', function(event) {
+        event.preventDefault();
+        // Set file content
+        file.content = $("#content").val();
+        // And save !
+        file.save();
+      });
+    </script>
+  </body>
+</html>
