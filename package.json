@@ -38,7 +38,7 @@
     "watch": "grunt watch",
     "bower": "grunt bower"
   },
-  "main": "./lib/index.js",
+  "main": "./lib/fledit.js",
   "ignore": [
     "node_modules",
     "bower_components",
