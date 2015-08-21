@@ -9,14 +9,15 @@
     <div class="container">
       <form class="row" id="main-form">
         <div class="col-md-8 col-md-offset-2">
-          <br />
+          <h2>Editor - Sandbox</h2>
+          <p class="lead text-muted">This is an example of how to save data on Fledit.</p>
           <div class="panel panel-default">
             <div class="panel-body">
               <textarea id="content" class="form-control" rows="6"></textarea>
               <br />
               <button type="submit" class="btn btn-primary">Save</button>
             </div>
-            <div class="panel-footer" id="link">
+            <div class="panel-footer" style="display: none;" id="link">
               This link allows you to view and edit your file on Fledit.io:<br />
               <!-- Will contain an admin link to the file -->
             </div>
@@ -29,15 +30,15 @@
     <script>
       // To work with a local instance of fledit
       Fledit.HOST = 'localhost:9000';
-
       // Create a new file instance
-      var file = Fledit.create().once('complete', function() {
+      var file = new Fledit();
+      // Will be called once after the file will be created
+      file.once('complete', function() {
         // Hold a link to the file
         var link = file.admin();
         // Update the link
         $("#link").show().append( $('<a/>').attr('href', link).html(link) );
-      })
-
+      });
       // Save the file when the user click on submit
       $('#main-form').on('submit', function(event) {
         event.preventDefault();

@@ -75,6 +75,8 @@ Fledit.prototype.load = function(id) {
 Fledit.prototype.save = function() {
   // Current instance of Fledit
   var file = this;
+  // This file may not have been saved yet
+  if( ! file._id ) return file.create(file.content);
   // Gets the file
   request.put( file.raw(), file).end(function(err, res) {
     if(res && res.ok) {
