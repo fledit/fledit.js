@@ -4,12 +4,12 @@ var request = require('superagent'),
      extend = require('node.extend'),
      events = require('events');
 
-function File(id) {
+function Fledit(id) {
   // Build the URL to the API at runtime
-  File.BASE = "http://" + File.HOST + "/api/files";
+  Fledit.BASE = "http://" + Fledit.HOST + "/api/files";
   // Create an event emitter
   var emitter = new events.EventEmitter(),
-  // Current instance of File
+  // Current instance of Fledit
   file = this;
   // The current file must be an instance of an EventEmiiter
   extend(file, emitter);
@@ -20,22 +20,22 @@ function File(id) {
 }
 
 // Fledit host (can be overided)
-File.HOST = 'www.fledit.io';
+Fledit.HOST = 'www.fledit.io';
 
 // Static method to create a new file and returns its instance
-File.create = function(content) {
+Fledit.create = function(content) {
   // Create a new empty file
-  var file = new File();
+  var file = new Fledit();
   // Return the new instance
   return file.create(content);
 };
 
 // Create a file
-File.prototype.create = function(content) {
-  // Current instance of File
+Fledit.prototype.create = function(content) {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
-  request.post(File.BASE, {content: content}).end(function(err, res) {
+  request.post(Fledit.BASE, {content: content}).end(function(err, res) {
       if(res && res.ok) {
         extend(file, res.body);
         file.emit("complete", file);
@@ -49,17 +49,17 @@ File.prototype.create = function(content) {
 
 
 // Static method to load a file using its id
-File.load = function(id) {
+Fledit.load = function(id) {
   // Create a new file
-  return new File(id);
+  return new Fledit(id);
 };
 
 // Load a file using its id
-File.prototype.load = function(id) {
-  // Current instance of File
+Fledit.prototype.load = function(id) {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
-  request.get(File.BASE + "/" + id).end(function(err, res) {
+  request.get(Fledit.BASE + "/" + id).end(function(err, res) {
     if(res && res.ok) {
       extend(file, res.body);
       file.emit("complete", file);
@@ -72,8 +72,8 @@ File.prototype.load = function(id) {
 };
 
 // Save a file
-File.prototype.save = function() {
-  // Current instance of File
+Fledit.prototype.save = function() {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
   request.put( file.raw(), file).end(function(err, res) {
@@ -89,8 +89,8 @@ File.prototype.save = function() {
 };
 
 // Delete a file
-File.prototype.del = function() {
-  // Current instance of File
+Fledit.prototype.del = function() {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
   request.del( file.raw(true) ).end(function(err, res) {
@@ -106,17 +106,17 @@ File.prototype.del = function() {
 
 
 // Link to a file
-File.prototype.link = function() {
-  return "http://" + File.HOST + "/#!/file/" + this._id;
+Fledit.prototype.link = function() {
+  return "http://" + Fledit.HOST + "/#!/file/" + this._id;
 };
 
 // Raw link to a file
-File.prototype.raw = function(secret) {
-  return File.BASE + "/" + this._id + (secret ? '?secret=' + this.secret : '');
+Fledit.prototype.raw = function(secret) {
+  return Fledit.BASE + "/" + this._id + (secret ? '?secret=' + this.secret : '');
 };
 
 // Admin link to a file
-File.prototype.admin = function() {
+Fledit.prototype.admin = function() {
   // Only admin link for file with a secret
   if(this.secret) {
     return this.link() + "?secret=" + this.secret;
@@ -125,4 +125,4 @@ File.prototype.admin = function() {
   }
 };
 
-module.exports = File;
+module.exports = Fledit;

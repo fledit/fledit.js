@@ -5,12 +5,12 @@ var request = require('superagent'),
      extend = require('node.extend'),
      events = require('events');
 
-function File(id) {
+function Fledit(id) {
   // Build the URL to the API at runtime
-  File.BASE = "http://" + File.HOST + "/api/files";
+  Fledit.BASE = "http://" + Fledit.HOST + "/api/files";
   // Create an event emitter
   var emitter = new events.EventEmitter(),
-  // Current instance of File
+  // Current instance of Fledit
   file = this;
   // The current file must be an instance of an EventEmiiter
   extend(file, emitter);
@@ -21,22 +21,22 @@ function File(id) {
 }
 
 // Fledit host (can be overided)
-File.HOST = 'www.fledit.io';
+Fledit.HOST = 'www.fledit.io';
 
 // Static method to create a new file and returns its instance
-File.create = function(content) {
+Fledit.create = function(content) {
   // Create a new empty file
-  var file = new File();
+  var file = new Fledit();
   // Return the new instance
   return file.create(content);
 };
 
 // Create a file
-File.prototype.create = function(content) {
-  // Current instance of File
+Fledit.prototype.create = function(content) {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
-  request.post(File.BASE, {content: content}).end(function(err, res) {
+  request.post(Fledit.BASE, {content: content}).end(function(err, res) {
       if(res && res.ok) {
         extend(file, res.body);
         file.emit("complete", file);
@@ -50,17 +50,17 @@ File.prototype.create = function(content) {
 
 
 // Static method to load a file using its id
-File.load = function(id) {
+Fledit.load = function(id) {
   // Create a new file
-  return new File(id);
+  return new Fledit(id);
 };
 
 // Load a file using its id
-File.prototype.load = function(id) {
-  // Current instance of File
+Fledit.prototype.load = function(id) {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
-  request.get(File.BASE + "/" + id).end(function(err, res) {
+  request.get(Fledit.BASE + "/" + id).end(function(err, res) {
     if(res && res.ok) {
       extend(file, res.body);
       file.emit("complete", file);
@@ -73,12 +73,12 @@ File.prototype.load = function(id) {
 };
 
 // Save a file
-File.prototype.save = function() {
-  // Current instance of File
+Fledit.prototype.save = function() {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
   request.put( file.raw(), file).end(function(err, res) {
-    if(res.ok) {
+    if(res && res.ok) {
       extend(file, res.body);
       file.emit("updated", file);
     } else {
@@ -90,8 +90,8 @@ File.prototype.save = function() {
 };
 
 // Delete a file
-File.prototype.del = function() {
-  // Current instance of File
+Fledit.prototype.del = function() {
+  // Current instance of Fledit
   var file = this;
   // Gets the file
   request.del( file.raw(true) ).end(function(err, res) {
@@ -107,17 +107,17 @@ File.prototype.del = function() {
 
 
 // Link to a file
-File.prototype.link = function() {
-  return "http://" + File.HOST + "/#!/file/" + this._id;
+Fledit.prototype.link = function() {
+  return "http://" + Fledit.HOST + "/#!/file/" + this._id;
 };
 
 // Raw link to a file
-File.prototype.raw = function(secret) {
-  return File.BASE + "/" + this._id + (secret ? '?secret=' + this.secret : '');
+Fledit.prototype.raw = function(secret) {
+  return Fledit.BASE + "/" + this._id + (secret ? '?secret=' + this.secret : '');
 };
 
 // Admin link to a file
-File.prototype.admin = function() {
+Fledit.prototype.admin = function() {
   // Only admin link for file with a secret
   if(this.secret) {
     return this.link() + "?secret=" + this.secret;
@@ -126,7 +126,7 @@ File.prototype.admin = function() {
   }
 };
 
-module.exports = File;
+module.exports = Fledit;
 
 },{"events":2,"node.extend":3,"superagent":6}],2:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
@@ -511,7 +511,7 @@ function extend() {
 /**
  * @public
  */
-extend.version = '1.0.8';
+extend.version = '1.1.3';
 
 /**
  * Exports module.
@@ -531,7 +531,11 @@ module.exports = extend;
 
 var objProto = Object.prototype;
 var owns = objProto.hasOwnProperty;
-var toString = objProto.toString;
+var toStr = objProto.toString;
+var symbolValueOf;
+if (typeof Symbol === 'function') {
+  symbolValueOf = Symbol.prototype.valueOf;
+}
 var isActualNaN = function (value) {
   return value !== value;
 };
@@ -592,7 +596,7 @@ is.defined = function (value) {
  */
 
 is.empty = function (value) {
-  var type = toString.call(value);
+  var type = toStr.call(value);
   var key;
 
   if ('[object Array]' === type || '[object Arguments]' === type || '[object String]' === type) {
@@ -606,7 +610,7 @@ is.empty = function (value) {
     return true;
   }
 
-  return false;
+  return !value;
 };
 
 /**
@@ -624,10 +628,10 @@ is.equal = function (value, other) {
     return true;
   }
 
-  var type = toString.call(value);
+  var type = toStr.call(value);
   var key;
 
-  if (type !== toString.call(other)) {
+  if (type !== toStr.call(other)) {
     return false;
   }
 
@@ -719,7 +723,7 @@ is.nil = is['null'] = function (value) {
  * @api public
  */
 
-is.undef = is['undefined'] = function (value) {
+is.undef = is.undefined = function (value) {
   return typeof value === 'undefined';
 };
 
@@ -736,8 +740,8 @@ is.undef = is['undefined'] = function (value) {
  * @api public
  */
 
-is.args = is['arguments'] = function (value) {
-  var isStandardArguments = '[object Arguments]' === toString.call(value);
+is.args = is.arguments = function (value) {
+  var isStandardArguments = '[object Arguments]' === toStr.call(value);
   var isOldArguments = !is.array(value) && is.arraylike(value) && is.object(value) && is.fn(value.callee);
   return isStandardArguments || isOldArguments;
 };
@@ -756,7 +760,7 @@ is.args = is['arguments'] = function (value) {
  */
 
 is.array = function (value) {
-  return '[object Array]' === toString.call(value);
+  return '[object Array]' === toStr.call(value);
 };
 
 /**
@@ -814,7 +818,7 @@ is.arraylike = function (value) {
  */
 
 is.boolean = function (value) {
-  return '[object Boolean]' === toString.call(value);
+  return '[object Boolean]' === toStr.call(value);
 };
 
 /**
@@ -857,7 +861,7 @@ is['true'] = function (value) {
  */
 
 is.date = function (value) {
-  return '[object Date]' === toString.call(value);
+  return '[object Date]' === toStr.call(value);
 };
 
 /**
@@ -894,7 +898,7 @@ is.element = function (value) {
  */
 
 is.error = function (value) {
-  return '[object Error]' === toString.call(value);
+  return '[object Error]' === toStr.call(value);
 };
 
 /**
@@ -912,7 +916,7 @@ is.error = function (value) {
 
 is.fn = is['function'] = function (value) {
   var isAlert = typeof window !== 'undefined' && value === window.alert;
-  return isAlert || '[object Function]' === toString.call(value);
+  return isAlert || '[object Function]' === toStr.call(value);
 };
 
 /**
@@ -929,7 +933,7 @@ is.fn = is['function'] = function (value) {
  */
 
 is.number = function (value) {
-  return '[object Number]' === toString.call(value);
+  return '[object Number]' === toStr.call(value);
 };
 
 /**
@@ -1182,7 +1186,7 @@ is.within = function (value, start, finish) {
  */
 
 is.object = function (value) {
-  return '[object Object]' === toString.call(value);
+  return '[object Object]' === toStr.call(value);
 };
 
 /**
@@ -1212,7 +1216,7 @@ is.hash = function (value) {
  */
 
 is.regexp = function (value) {
-  return '[object RegExp]' === toString.call(value);
+  return '[object RegExp]' === toStr.call(value);
 };
 
 /**
@@ -1229,7 +1233,7 @@ is.regexp = function (value) {
  */
 
 is.string = function (value) {
-  return '[object String]' === toString.call(value);
+  return '[object String]' === toStr.call(value);
 };
 
 /**
@@ -1264,6 +1268,19 @@ is.base64 = function (value) {
 
 is.hex = function (value) {
   return is.string(value) && (!value.length || hexRegex.test(value));
+};
+
+/**
+ * is.symbol
+ * Test if `value` is an ES6 Symbol
+ *
+ * @param {Mixed} value value to test
+ * @return {Boolean} true if `value` is a Symbol, false otherise
+ * @api public
+ */
+
+is.symbol = function (value) {
+  return typeof Symbol === 'function' && toStr.call(value) === '[object Symbol]' && typeof symbolValueOf.call(value) === 'symbol';
 };
 
 },{}],6:[function(require,module,exports){
@@ -1756,7 +1773,7 @@ function Request(method, url) {
     new_err.response = res;
     new_err.status = res.status;
 
-    self.callback(err || new_err, res);
+    self.callback(new_err, res);
   });
 }
 
@@ -2229,7 +2246,8 @@ Request.prototype.end = function(fn){
   // body
   if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
     // serialize stuff
-    var serialize = request.serialize[this.getHeader('Content-Type')];
+    var contentType = this.getHeader('Content-Type');
+    var serialize = request.serialize[contentType ? contentType.split(';')[0] : ''];
     if (serialize) data = serialize(data);
   }
 
@@ -2244,6 +2262,20 @@ Request.prototype.end = function(fn){
   xhr.send(data);
   return this;
 };
+
+/**
+ * Faux promise support
+ *
+ * @param {Function} fulfill
+ * @param {Function} reject
+ * @return {Request}
+ */
+
+Request.prototype.then = function (fulfill, reject) {
+  return this.end(function(err, res) {
+    err ? reject(err) : fulfill(res);
+  });
+}
 
 /**
  * Expose `Request`.
