@@ -52,5 +52,5 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', ['jshint', 'mochacli']);
-  grunt.registerTask('bower', ['browserify', 'uglify']);
+  grunt.registerTask('browser', ['browserify', 'uglify']);
 };
