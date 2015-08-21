@@ -1,4 +1,7 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Fledit = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = require('./lib/fledit');
+
+},{"./lib/fledit":2}],2:[function(require,module,exports){
 'use strict';
 
 var request = require('superagent'),
@@ -130,7 +133,7 @@ Fledit.prototype.admin = function() {
 
 module.exports = Fledit;
 
-},{"events":2,"node.extend":3,"superagent":6}],2:[function(require,module,exports){
+},{"events":3,"node.extend":4,"superagent":7}],3:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -433,11 +436,11 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = require('./lib/extend');
 
 
-},{"./lib/extend":4}],4:[function(require,module,exports){
+},{"./lib/extend":5}],5:[function(require,module,exports){
 /*!
  * node.extend
  * Copyright 2011, John Resig
@@ -521,7 +524,7 @@ extend.version = '1.1.3';
 module.exports = extend;
 
 
-},{"is":5}],5:[function(require,module,exports){
+},{"is":6}],6:[function(require,module,exports){
 
 /**!
  * is
@@ -1285,7 +1288,7 @@ is.symbol = function (value) {
   return typeof Symbol === 'function' && toStr.call(value) === '[object Symbol]' && typeof symbolValueOf.call(value) === 'symbol';
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -2425,7 +2428,7 @@ request.put = function(url, data, fn){
 
 module.exports = request;
 
-},{"emitter":7,"reduce":8}],7:[function(require,module,exports){
+},{"emitter":8,"reduce":9}],8:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -2591,7 +2594,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 
 /**
  * Reduce `arr` with `fn`.
