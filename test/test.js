@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var Fledit = require('../');
+var Fledit = require('../lib/fledit');
 
 var EXISTING_ID = "5538c9b58814581100287a17";
 // If tests are with a local instance of Fledit.io
